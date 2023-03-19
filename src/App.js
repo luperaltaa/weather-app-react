@@ -17,13 +17,13 @@ export default function App() {
           />
           <h2 class="temperature">--</h2>
           <span>
-            <a id="celciusLink" class="selected" href="#">
+            {/* <a id="celciusLink" class="selected" href="">
               °C
             </a>{" "}
             |
             <a id="fahrenheitLink" href="#">
               °F
-            </a>
+            </a> */}
           </span>
         </div>
         <Search />
