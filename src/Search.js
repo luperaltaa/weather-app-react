@@ -9,7 +9,6 @@ export default function Search(props) {
 
     function showTemperature(response) {
       let now = new Date();
-      let time = document.querySelector("#time");
 
       let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
       let day = days[now.getDay()];
