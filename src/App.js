@@ -1,21 +1,18 @@
 import "./styles.css";
-import React from "react";
+import React, { useState } from "react";
 
 import Search from "./Search";
 
 import WeatherInfo from "./WeatherInfo";
 
 export default function App() {
+  let [weather, setWeather] = useState({});
   return (
     <div class="container">
       <div class="container-wrapper">
         <div class="float-end">
-          <img
-            class="icon"
-            src="http://openweathermap.org/img/wn/10d@2x.png"
-            alt=""
-          />
-          <h2 class="temperature">--</h2>
+          <img class="icon" src={weather.icon} alt="" />
+          <h2 class="temperature">{Math.round(weather.temperature)}</h2>
           <span>
             {/* <a id="celciusLink" class="selected" href="">
               °C
@@ -26,10 +23,10 @@ export default function App() {
             </a> */}
           </span>
         </div>
-        <Search />
+        <Search setWeather={setWeather} />
 
-        <h1 class="cityname">--</h1>
-        <WeatherInfo />
+        <h1 class="cityname">{weather.cityname}</h1>
+        <WeatherInfo weather={weather} />
         <div id="forecast" class="row"></div>
       </div>
       <div>
