@@ -30,7 +30,6 @@ export default function App() {
 
         <h1 className="cityname">{weather.cityname}</h1>
         <WeatherInfo weather={weather} />
-        <div id="forecast" className="row"></div>
       </div>
       <div>
         <a href="https://github.com/luperaltaa/weatherapp">Open-source code</a>

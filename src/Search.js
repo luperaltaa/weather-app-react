@@ -3,6 +3,7 @@ import axios from "axios";
 
 export default function Search(props) {
   let [city, setCity] = useState("");
+  let information = {};
   let apiKey = "d0482780e4fed960938a2f16ae7a19ee";
 
   function showTemperature(response) {
@@ -19,7 +20,7 @@ export default function Search(props) {
       minutes = `0${minutes}`;
     }
 
-    let information = {
+    information = {
       time: `${day}  ${hours}:${minutes}`,
       temperature: response.data.main.temp,
       description: response.data.weather[0].description,
@@ -28,16 +29,26 @@ export default function Search(props) {
       icon: `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
       cityname: response.data.name,
     };
-    props.setWeather(information);
+    fetchForecast(response.data.coord);
   }
 
   function showNewPosition(position) {
-    console.log(position);
     let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${apiKey}&units=metric`;
     axios.get(apiUrl).then(showTemperature);
   }
   function showCurrentPosition() {
     navigator.geolocation.getCurrentPosition(showNewPosition);
+  }
+
+  function fetchForecast(coords) {
+    let forcastApiKey = "2980ff43226d67e53abfcdb6d457dcc8";
+    let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coords.lat}&lon=${coords.lon}&appid=${forcastApiKey}&units=metric`;
+    axios.get(apiUrl).then(updateForecast);
+  }
+
+  function updateForecast(response) {
+    information.forecast = response.data.daily;
+    props.setWeather(information);
   }
 
   function submit(event) {
