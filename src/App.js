@@ -8,13 +8,15 @@ import WeatherInfo from "./WeatherInfo";
 export default function App() {
   let [weather, setWeather] = useState({});
   return (
-    <div class="container">
-      <div class="container-wrapper">
-        <div class="float-end">
-          <img class="icon" src={weather.icon} alt="" />
-          <h2 class="temperature">{Math.round(weather.temperature)}</h2>
+    <div className="container">
+      <div className="container-wrapper">
+        <div className="float-end">
+          <img className="icon" src={weather.icon ?? ""} alt="" />
+          <h2 className="temperature">
+            {Math.round(weather.temperature ?? 0)}
+          </h2>
           <span>
-            {/* <a id="celciusLink" class="selected" href="">
+            {/* <a id="celciusLink" className="selected" href="">
               °C
             </a>{" "}
             |
@@ -25,9 +27,9 @@ export default function App() {
         </div>
         <Search setWeather={setWeather} />
 
-        <h1 class="cityname">{weather.cityname}</h1>
+        <h1 className="cityname">{weather.cityname}</h1>
         <WeatherInfo weather={weather} />
-        <div id="forecast" class="row"></div>
+        <div id="forecast" className="row"></div>
       </div>
       <div>
         <a href="https://github.com/luperaltaa/weatherapp">Open-source code</a>

@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import axios from "axios";
 
 export default function Search(props) {
-  let [city, setCity] = useState("");
+  let [city, setCity] = useState("London");
 
   function submit(event) {
     event.preventDefault();
-
     function showTemperature(response) {
       let now = new Date();
 
@@ -40,22 +39,22 @@ export default function Search(props) {
     setCity(event.target.value);
   }
   return (
-    <form onSubmit={submit} class="search-form">
-      <div class="input-group mb-3 search">
-        <div class="input-group">
+    <form onSubmit={submit} className="search-form">
+      <div className="input-group mb-3 search">
+        <div className="input-group">
           <input
             type="search"
-            class="form-control"
+            className="form-control"
             placeholder=" enter the city"
-            autofocus="on"
-            autocomplete="off"
+            autoFocus="on"
+            autoComplete="off"
             aria-label="Dollar amount (with dot and two decimal places)"
             id="search-text-input"
             onChange={updateCity}
           />
-          <input type="submit" value="Search" class="input-group-text" />
-          <span id="current-location" class="input-group-text">
-            <i class="fa-solid fa-location-crosshairs"></i>
+          <input type="submit" value="Search" className="input-group-text" />
+          <span id="current-location" className="input-group-text">
+            <i className="fa-solid fa-location-crosshairs"></i>
           </span>
         </div>
       </div>
