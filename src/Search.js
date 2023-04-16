@@ -3,35 +3,46 @@ import axios from "axios";
 
 export default function Search(props) {
   let [city, setCity] = useState("");
+  let apiKey = "d0482780e4fed960938a2f16ae7a19ee";
+
+  function showTemperature(response) {
+    let now = new Date();
+
+    let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    let day = days[now.getDay()];
+    let hours = now.getHours();
+    if (hours < 10) {
+      hours = `0${hours}`;
+    }
+    let minutes = now.getMinutes();
+    if (minutes < 10) {
+      minutes = `0${minutes}`;
+    }
+
+    let information = {
+      time: `${day}  ${hours}:${minutes}`,
+      temperature: response.data.main.temp,
+      description: response.data.weather[0].description,
+      humidity: response.data.main.humidity,
+      wind: response.data.wind.speed,
+      icon: `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
+      cityname: response.data.name,
+    };
+    props.setWeather(information);
+  }
+
+  function showNewPosition(position) {
+    console.log(position);
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${apiKey}&units=metric`;
+    axios.get(apiUrl).then(showTemperature);
+  }
+  function showCurrentPosition() {
+    navigator.geolocation.getCurrentPosition(showNewPosition);
+  }
 
   function submit(event) {
     event.preventDefault();
-    function showTemperature(response) {
-      let now = new Date();
-
-      let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-      let day = days[now.getDay()];
-      let hours = now.getHours();
-      if (hours < 10) {
-        hours = `0${hours}`;
-      }
-      let minutes = now.getMinutes();
-      if (minutes < 10) {
-        minutes = `0${minutes}`;
-      }
-
-      let information = {
-        time: `${day}  ${hours}:${minutes}`,
-        temperature: response.data.main.temp,
-        description: response.data.weather[0].description,
-        humidity: response.data.main.humidity,
-        wind: response.data.wind.speed,
-        icon: `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
-        cityname: response.data.name,
-      };
-      props.setWeather(information);
-    }
-    let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=d0482780e4fed960938a2f16ae7a19ee&units=metric`;
+    let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
     axios.get(url).then(showTemperature);
   }
 
@@ -53,7 +64,11 @@ export default function Search(props) {
             onChange={updateCity}
           />
           <input type="submit" value="Search" className="input-group-text" />
-          <span id="current-location" className="input-group-text">
+          <span
+            id="current-location"
+            onClick={showCurrentPosition}
+            className="input-group-text"
+          >
             <i className="fa-solid fa-location-crosshairs"></i>
           </span>
         </div>
