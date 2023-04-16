@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 export default function Search(props) {
-  let [city, setCity] = useState("London");
+  let [city, setCity] = useState("");
 
   function submit(event) {
     event.preventDefault();
@@ -31,7 +31,7 @@ export default function Search(props) {
       };
       props.setWeather(information);
     }
-    let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=2980ff43226d67e53abfcdb6d457dcc8&units=metric`;
+    let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=d0482780e4fed960938a2f16ae7a19ee&units=metric`;
     axios.get(url).then(showTemperature);
   }
 
